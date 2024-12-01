@@ -1,0 +1,7 @@
+{
+  "networks": {
+    "mainnet": "80",
+    "testnet": "EF"
+  },
+  "logLevel": "info"
+}
