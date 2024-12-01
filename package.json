@@ -1,6 +1,6 @@
 {
   "name": "btc-minikeytools",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "BTC-MiniKeyTools is a robust tool for working with Bitcoin Mini private keys. It provides validation, key generation, and conversion functionalities, including HEX and Wallet Import Format (WIF) keys. Fully equipped with CLI support and logging options, it's designed for Bitcoin developers and enthusiasts alike.",
   "main": "src/classes/MiniKeyConverter.js",
   "scripts": {
