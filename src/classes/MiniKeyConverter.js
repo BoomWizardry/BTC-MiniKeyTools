@@ -1,5 +1,6 @@
 'use strict';
 
+require('../../core/setupAliases');
 const logger = require('@core/logger');
 const crypto = require('crypto');
 const { sha256 } = require('@utils/hashUtils');
@@ -57,7 +58,7 @@ class MiniKeyConverter {
       minikey = 'S' + crypto.randomBytes(32).toString('base64')
         .replace(/[^1-9A-HJ-NP-Za-km-z]/g, '')
         .slice(0, 29);
-    } while (!this.check(minikey));
+    } while (!this.check(minikey, true));
     return minikey;
   }
 

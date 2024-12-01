@@ -23,7 +23,7 @@
 
 // Try to register module aliases dynamically
 try {
-  require('module-alias/register');
+  require('../core/setupAliases');
 } catch (error) {
   console.warn('Module aliases are not registered. Ensure the runtime supports _moduleAliases.');
 }
