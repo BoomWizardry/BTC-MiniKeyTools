@@ -1,5 +1,5 @@
 {
-  "name": "BTC-MiniKeyTools",
+  "name": "btc-minikeytools",
   "version": "1.0.0",
   "description": "BTC-MiniKeyTools is a robust tool for working with Bitcoin Mini private keys. It provides validation, key generation, and conversion functionalities, including HEX and Wallet Import Format (WIF) keys. Fully equipped with CLI support and logging options, it's designed for Bitcoin developers and enthusiasts alike.",
   "main": "src/Classes/MiniKeyConverter.js",
@@ -9,8 +9,20 @@
     "test": "jest",
     "docs": "jsdoc -c jsdoc.json src/**/*.js"
   },
-  "author": "",
+  "author": "BoomWizardry <boomcodewiz@gmail.com>",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/BoomWizardry/BTC-MiniKeyTools.git"
+  },
+  "keywords": [
+    "bitcoin",
+    "minikey",
+    "crypto",
+    "wallet",
+    "WIF",
+    "key-conversion"
+  ],
   "bin": {
     "minikey-converter": "./src/app.js"
   },
@@ -20,17 +32,18 @@
     "utils",
     "core",
     "tests",
-    "README.md"
+    "README.md",
+    "jest.config.js"
   ],
   "dependencies": {
     "commander": "^12.1.0",
     "crypto": "^1.0.1",
+    "jest": "^29.7.0",
     "module-alias": "^2.2.3",
     "winston": "^3.17.0"
   },
   "devDependencies": {
     "docdash": "^2.0.2",
-    "jest": "^29.7.0",
     "jsdoc": "^4.0.4"
   },
   "engines": {
