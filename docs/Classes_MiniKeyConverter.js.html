@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    
+    <meta charset="utf-8">
+    <title>Classes/MiniKeyConverter.js - Documentation</title>
+    
+    
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc.css">
+    <script src="scripts/nav.js" defer></script>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+
+<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+<label for="nav-trigger" class="navicon-button x">
+  <div class="navicon"></div>
+</label>
+
+<label for="nav-trigger" class="overlay"></label>
+
+<nav >
+    
+    
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="MiniKeyConverter.html">MiniKeyConverter</a><ul class='methods'><li data-type='method'><a href="MiniKeyConverter.html#_computeChecksum">_computeChecksum</a></li><li data-type='method'><a href="MiniKeyConverter.html#_createExtendedKeyBuffer">_createExtendedKeyBuffer</a></li><li data-type='method'><a href="MiniKeyConverter.html#check">check</a></li><li data-type='method'><a href="MiniKeyConverter.html#hexToWif">hexToWif</a></li><li data-type='method'><a href="MiniKeyConverter.html#miniToHex">miniToHex</a></li></ul></li></ul><h3>Modules</h3><ul><li><a href="module-app.html">app</a><ul class='methods'><li data-type='method'><a href="module-app.html#~privateKey">privateKey</a></li><li data-type='method'><a href="module-app.html#~wifKey">wifKey</a></li></ul></li></ul>
+    
+</nav>
+
+<div id="main">
+    
+    <h1 class="page-title">Classes/MiniKeyConverter.js</h1>
+    
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>
+'use strict';
+
+const logger = require('../../core/logger');
+const { sha256 } = require('../../utils/hashUtils');
+const { encodeBase58 } = require('../../utils/base58');
+const config = require('../../config/config.json');  // Load configuration for network prefixes
+
+/**
+ * Converts Mini private keys to other formats and performs validation.
+ *
+ * @example
+ * const converter = new MiniKeyConverter();
+ * const valid = converter.check('S6c56bnXQiBjk9mqSYE7ykVQ7NzrRy');
+ * if (valid) {
+ *   const hexKey = converter.miniToHex('S6c56bnXQiBjk9mqSYE7ykVQ7NzrRy');
+ *   console.log(hexKey);
+ * }
+ */
+class MiniKeyConverter {
+    constructor() {}
+
+    /**
+     * Validates a MiniKey format.
+     *
+     * @param {string} miniKey - The MiniKey to validate.
+     * @returns {boolean} - True if the MiniKey is valid, otherwise false.
+     */
+    check(miniKey) {
+        logger.debug(`Checking MiniKey format for: ${miniKey}`);
+
+        // Check if input is empty or not a string
+        if (!miniKey || typeof miniKey !== 'string') {
+            logger.warn(`Invalid input: MiniKey must be a non-empty string. Received: ${miniKey}`);
+            return false;
+        }
+
+        // Check for length constraints (expected length of MiniKey is 30-40 characters, for example)
+        if (miniKey.length &lt; 30 || miniKey.length > 40) {
+            logger.warn(`Invalid input: MiniKey length out of bounds. Received: ${miniKey.length} characters.`);
+            return false;
+        }
+
+        // Validate format with regex
+        const isValid = /^00[0-9A-F]{62}$/.test(sha256(`${miniKey}?`).toString('hex').toUpperCase());
+        logger.debug(`MiniKey format valid: ${isValid}`);
+        return isValid;
+    }
+
+    /**
+     * Converts a MiniKey into its corresponding private key in hexadecimal format.
+     *
+     * @param {string} key - The MiniKey to convert.
+     * @returns {string} - The private key in hexadecimal format.
+     */
+    miniToHex(key) {
+        logger.info(`Converting MiniKey to hex: ${key}`);
+        const hexKey = sha256(key).toString('hex').toUpperCase();
+        logger.debug(`Converted private key (hex): ${hexKey}`);
+        return hexKey;
+    }
+
+    /**
+     * Creates a buffer containing the extended key with the network prefix and optional compression flag.
+     *
+     * @param {string} key - The private key in hexadecimal format.
+     * @param {boolean} testnet - Whether the key is for testnet.
+     * @param {boolean} compressed - Whether the key is compressed.
+     * @returns {Buffer} - The extended key as a buffer.
+     */
+    _createExtendedKeyBuffer(key, testnet, compressed) {
+        logger.debug(`Creating extended key buffer. Key: ${key}, Testnet: ${testnet}, Compressed: ${compressed}`);
+
+        const prefix = testnet ? config.networks.testnet : config.networks.mainnet;
+        let extendedKey = Buffer.from(`${prefix}${key}`, 'hex');
+        if (compressed) {
+            extendedKey = Buffer.concat([extendedKey, Buffer.from('01', 'hex')]);
+        }
+
+        logger.debug(`Extended key buffer created: ${extendedKey.toString('hex')}`);
+        return extendedKey;
+    }
+
+    /**
+     * Computes the checksum by performing a double SHA256 hash.
+     *
+     * @param {Buffer} buffer - The extended key buffer.
+     * @returns {Buffer} - The first 4 bytes of the double hash.
+     */
+    _computeChecksum(buffer) {
+        logger.debug(`Computing checksum for buffer: ${buffer.toString('hex')}`);
+
+        const hash1 = sha256(buffer);
+        const hash2 = sha256(hash1);
+        const checksum = hash2.slice(0, 4);
+
+        logger.debug(`Checksum: ${checksum.toString('hex')}`);
+        return checksum;
+    }
+
+    /**
+     * Converts a private key in hexadecimal format to Wallet Import Format (WIF).
+     *
+     * @param {string} key - The private key in hexadecimal format (64 characters).
+     * @param {boolean} [testnet=false] - Whether the key is for the Bitcoin testnet.
+     * @param {boolean} [compressed=false] - Whether the key is compressed.
+     * @returns {string} - The private key in Wallet Import Format (WIF).
+     */
+    hexToWif(key, testnet = false, compressed = false) {
+        logger.info(`Converting hex to WIF: ${key}, testnet: ${testnet}, compressed: ${compressed}`);
+
+        // Validate that the key is a valid hexadecimal string
+        if (!/^[0-9A-Fa-f]{64}$/.test(key)) {
+            logger.error(`Invalid hexadecimal key format: ${key}`);
+            throw new Error('Invalid hexadecimal key format');
+        }
+
+        try {
+            const extendedKey = this._createExtendedKeyBuffer(key, testnet, compressed);
+            const checksum = this._computeChecksum(extendedKey);
+            const fullKey = Buffer.concat([extendedKey, checksum]);
+            const wif = encodeBase58(fullKey);
+
+            logger.info(`Successfully converted to WIF: ${wif}`);
+            return wif;
+        } catch (error) {
+            logger.error(`Error converting to WIF: ${error.message}`);
+            throw error;
+        }
+    }
+}
+
+module.exports = MiniKeyConverter;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+    
+    
+</div>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 4.0.4</a> on Thu Nov 28 2024 18:43:22 GMT+0100 (heure normale d’Europe centrale) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
+</footer>
+
+<script>prettyPrint();</script>
+<script src="scripts/polyfill.js"></script>
+<script src="scripts/linenumber.js"></script>
+
+
+
+</body>
+</html>
