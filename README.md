@@ -10,6 +10,7 @@ This project is a Node.js library and CLI tool for working with Bitcoin's **Mini
 - [Usage](#usage)
   - [CLI Commands](#cli-commands)
   - [Basic Example](#basic-example)
+- [Documentation](#documentation)
 - [Tests](#tests)
 - [Security](#security)
 - [License](#license)
@@ -158,6 +159,9 @@ console.log(`WIF Key: ${wifKey}`); // Expected Output: WIF Key: KwDiBf89QgGbjEhK
 const isValid = Converter.verifyWifAgainstMiniKey(miniKey, wifKey);
 console.log(`WIF matches MiniKey: ${isValid}`); // Expected Output: WIF matches MiniKey: true
 ```
+
+## Documentation
+The complete documentation is available [here](https://boomwizardry.github.io/BTC-MiniKeyTools/).
 
 ## Tests
 
