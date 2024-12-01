@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    
+    <meta charset="utf-8">
+    <title>Home - Documentation</title>
+    
+    
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc.css">
+    <script src="scripts/nav.js" defer></script>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+
+<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+<label for="nav-trigger" class="navicon-button x">
+  <div class="navicon"></div>
+</label>
+
+<label for="nav-trigger" class="overlay"></label>
+
+<nav >
+    
+    
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="MiniKeyConverter.html">MiniKeyConverter</a><ul class='methods'><li data-type='method'><a href="MiniKeyConverter.html#check">check</a></li><li data-type='method'><a href="MiniKeyConverter.html#generateMiniKey">generateMiniKey</a></li><li data-type='method'><a href="MiniKeyConverter.html#hexToWif">hexToWif</a></li><li data-type='method'><a href="MiniKeyConverter.html#miniToHex">miniToHex</a></li><li data-type='method'><a href="MiniKeyConverter.html#verifyWifAgainstMiniKey">verifyWifAgainstMiniKey</a></li></ul></li></ul><h3>Modules</h3><ul><li><a href="module-app.html">app</a><ul class='methods'><li data-type='method'><a href="module-app.html#~LoggingLevelOptions">LoggingLevelOptions</a></li><li data-type='method'><a href="module-app.html#~generate">generate</a></li><li data-type='method'><a href="module-app.html#~process">process</a></li><li data-type='method'><a href="module-app.html#~to-hex">to-hex</a></li><li data-type='method'><a href="module-app.html#~to-wif">to-wif</a></li><li data-type='method'><a href="module-app.html#~validate">validate</a></li><li data-type='method'><a href="module-app.html#~verify">verify</a></li></ul></li></ul><h3>Global</h3><ul><li><a href="global.html#encodeBase58">encodeBase58</a></li><li><a href="global.html#sha256">sha256</a></li></ul>
+    
+</nav>
+
+<div id="main">
+    
+
+    
+
+
+
+    
+
+
+    <section class="package">
+        <h3> </h3>		
+    </section>
+
+
+
+
+
+
+
+
+
+    
+
+
+
+    <section class="readme usertext">
+        <article><h1>Bitcoin Mini Private Key Converter</h1>
+<p>This project is a Node.js library and CLI tool for working with Bitcoin's <strong>Mini private key</strong> format. It provides utilities for validating, generating, converting, and verifying Wallet Import Format (WIF) private keys based on the Bitcoin Mini private key input.</p>
+<h2>Table of Contents</h2>
+<ul>
+<li><a href="#features">Features</a></li>
+<li><a href="#requirements">Requirements</a></li>
+<li><a href="#installation">Installation</a></li>
+<li><a href="#usage">Usage</a>
+<ul>
+<li><a href="#cli-commands">CLI Commands</a></li>
+<li><a href="#basic-example">Basic Example</a></li>
+</ul>
+</li>
+<li><a href="#tests">Tests</a></li>
+<li><a href="#security">Security</a></li>
+<li><a href="#license">License</a></li>
+</ul>
+<h2>Features</h2>
+<ul>
+<li>
+<p><strong>Validation of Bitcoin Mini private keys</strong><br>
+Ensures the MiniKey follows the proper format.<br>
+Example: <code>S6c56bnXQiBjk9mqSYE7ykVQ7NzrRy</code></p>
+</li>
+<li>
+<p><strong>Generation of Bitcoin Mini private keys</strong><br>
+Generates new 30-character MiniKeys that pass all validation checks.<br>
+Example: <code>S9K8CNzE2U3RhYvp5AL8BWXYnVfTmP</code></p>
+</li>
+<li>
+<p><strong>Conversion to HEX private keys</strong><br>
+Converts a valid MiniKey to its 64-character HEX representation.<br>
+Example: <code>0C28FCA386C7A227600B2FE50B7CAE11EC86D3BF1FBE471BE89827E19D72AA1D</code></p>
+</li>
+<li>
+<p><strong>Conversion to Wallet Import Format (WIF)</strong><br>
+Generates WIF keys for mainnet and testnet, supporting compressed and uncompressed keys.<br>
+Example: <code>5HueCGU8rMjxEXxiPuD5BDu3qa8N1P2Sr2jXZbNmi4xzFqJMPtj</code></p>
+</li>
+<li>
+<p><strong>Verification of WIF keys</strong><br>
+Verifies whether a WIF key corresponds to its original MiniKey.</p>
+</li>
+<li>
+<p><strong>Logging to Console and File</strong><br>
+Logs are written to the console and to the <code>app.log</code> file in the project directory. Use the <code>--verbose</code> and <code>--quiet</code> options to adjust log verbosity.</p>
+</li>
+</ul>
+<h2>Requirements</h2>
+<ul>
+<li><strong>Node.js</strong>: Version 20.11.1 (specified in <code>.nvmrc</code> or <code>package.json</code> under <code>engines</code>).</li>
+<li><strong>Dependencies</strong>: Refer to the <code>package.json</code> file for required modules.</li>
+</ul>
+<h2>Installation</h2>
+<p>To install dependencies for local use:</p>
+<pre class="prettyprint source lang-bash"><code>npm install
+</code></pre>
+<p>To install globally as a CLI tool:</p>
+<pre class="prettyprint source lang-bash"><code>npm install -g minikey-converter
+</code></pre>
+<p>After installation, use the CLI anywhere:</p>
+<pre class="prettyprint source lang-bash"><code>minikey-converter process S6c56bnXQiBjk9mqSYE7ykVQ7NzrRy
+</code></pre>
+<h2>Usage</h2>
+<h3>CLI Commands</h3>
+<ol>
+<li><strong>Generate a MiniKey</strong></li>
+</ol>
+<pre class="prettyprint source lang-bash"><code>minikey-converter generate
+</code></pre>
+<p>This will generate a new MiniKey, convert it to HEX, and generate WIF keys for both mainnet and testnet.</p>
+<ol start="2">
+<li><strong>Validate a MiniKey</strong></li>
+</ol>
+<pre class="prettyprint source lang-bash"><code>minikey-converter validate S6c56bnXQiBjk9mqSYE7ykVQ7NzrRy
+</code></pre>
+<ol start="3">
+<li><strong>Convert a MiniKey to HEX</strong></li>
+</ol>
+<pre class="prettyprint source lang-bash"><code>minikey-converter to-hex S6c56bnXQiBjk9mqSYE7ykVQ7NzrRy
+</code></pre>
+<ol start="4">
+<li><strong>Convert HEX to WIF</strong></li>
+</ol>
+<p>Generate mainnet WIF:</p>
+<pre class="prettyprint source lang-bash"><code>minikey-converter to-wif 4C7A9640C72DC2099F23715D0C8A0D8A35F8906E3CAB61DD3F78B67BF887C9AB
+</code></pre>
+<p>Generate testnet WIF:</p>
+<pre class="prettyprint source lang-bash"><code>minikey-converter to-wif 4C7A9640C72DC2099F23715D0C8A0D8A35F8906E3CAB61DD3F78B67BF887C9AB --testnet
+</code></pre>
+<p>Generate compressed WIF:</p>
+<pre class="prettyprint source lang-bash"><code>minikey-converter to-wif 4C7A9640C72DC2099F23715D0C8A0D8A35F8906E3CAB61DD3F78B67BF887C9AB --compressed
+</code></pre>
+<ol start="5">
+<li><strong>Verify a WIF key against a MiniKey</strong></li>
+</ol>
+<pre class="prettyprint source lang-bash"><code>minikey-converter verify S6c56bnXQiBjk9mqSYE7ykVQ7NzrRy 5HueCGU8rMjxEXxiPuD5BDu3qa8N1P2Sr2jXZbNmi4xzFqJMPtj
+</code></pre>
+<ol start="6">
+<li><strong>Full Workflow: Validate, Convert to HEX, and WIF</strong></li>
+</ol>
+<pre class="prettyprint source lang-bash"><code>minikey-converter process S6c56bnXQiBjk9mqSYE7ykVQ7NzrRy
+</code></pre>
+<h4>Log Level Options</h4>
+<p>The following global options control the logging output for all CLI commands:</p>
+<ul>
+<li><strong>Default</strong>: Logs general information (<code>info</code> level).</li>
+<li><strong>Verbose Mode</strong>: Add <code>--verbose</code> to display detailed logs (<code>debug</code> level).</li>
+<li><strong>Quiet Mode</strong>: Add <code>--quiet</code> to suppress all logs except errors (<code>error</code> level).</li>
+</ul>
+<p>Example:</p>
+<pre class="prettyprint source lang-bash"><code>minikey-converter process S6c56bnXQiBjk9mqSYE7ykVQ7NzrRy --verbose
+</code></pre>
+<h3>Basic Example</h3>
+<pre class="prettyprint source lang-javascript"><code>const MiniKeyConverter = require('./src/Classes/MiniKeyConverter');
+const Converter = new MiniKeyConverter();
+
+// Generate a MiniKey
+const miniKey = Converter.generateMiniKey();
+console.log(`Generated MiniKey: ${miniKey}`);
+
+// Validate Bitcoin Mini private key
+console.log(`Is valid: ${Converter.check(miniKey)}`); // Expected Output: Is valid: true
+
+// Convert Bitcoin MiniKey to HEX
+const hexKey = Converter.miniToHex(miniKey);
+console.log(`HEX Private Key: ${hexKey}`); // Expected Output: HEX Private Key: 0C28FCA386C7A227600B2FE50B7CAE11EC86D3BF1FBE471BE89827E19D72AA1D
+
+// Convert HEX to WIF
+const wifKey = Converter.hexToWif(hexKey, false, true);
+console.log(`WIF Key: ${wifKey}`); // Expected Output: WIF Key: KwDiBf89QgGbjEhKnhXJuH7SUWJ9aWdh9vVVGF7NDNN1D8TPCAiG
+
+// Verify if the WIF matches the MiniKey
+const isValid = Converter.verifyWifAgainstMiniKey(miniKey, wifKey);
+console.log(`WIF matches MiniKey: ${isValid}`); // Expected Output: WIF matches MiniKey: true
+</code></pre>
+<h2>Tests</h2>
+<p>Run the test suite to ensure everything works correctly:</p>
+<pre class="prettyprint source lang-bash"><code>npm test
+</code></pre>
+<h2>Security</h2>
+<ul>
+<li>This tool processes private keys and generates sensitive outputs (e.g., WIF keys). Handle all inputs and outputs securely.</li>
+<li>Avoid running the tool on untrusted systems or sharing private keys.</li>
+<li>Logs may contain private keys when using <code>--verbose</code>. Consider clearing the <code>app.log</code> file after use if this is a concern.</li>
+</ul>
+<h2>License</h2>
+<p>This project is licensed under the MIT License. See the <code>LICENSE</code> file for details.</p></article>
+    </section>
+
+
+
+
+
+
+    
+    
+</div>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 4.0.4</a> on Sun Dec 01 2024 18:32:50 GMT+0000 (Coordinated Universal Time) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
+</footer>
+
+<script>prettyPrint();</script>
+<script src="scripts/polyfill.js"></script>
+<script src="scripts/linenumber.js"></script>
+
+
+
+</body>
+</html>
