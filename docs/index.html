@@ -60,8 +60,8 @@
 
 
     <section class="readme usertext">
-        <article><h1>Bitcoin Mini Private Key Converter</h1>
-<p>This project is a Node.js library and CLI tool for working with Bitcoin's <strong>Mini private key</strong> format. It provides utilities for validating, generating, converting, and verifying Wallet Import Format (WIF) private keys based on the Bitcoin Mini private key input.</p>
+        <article><h1>BTC-MiniKeyTools</h1>
+<p>BTC-MiniKeyTools is a robust tool for working with Bitcoin Mini private keys. It provides validation, key generation, and conversion functionalities, including HEX and Wallet Import Format (WIF) keys. Fully equipped with CLI support and logging options, it's designed for Bitcoin developers and enthusiasts alike.</p>
 <h2>Table of Contents</h2>
 <ul>
 <li><a href="#features">Features</a></li>
@@ -74,6 +74,8 @@
 </ul>
 </li>
 <li><a href="#documentation">Documentation</a></li>
+<li><a href="#project-link">Project Link</a></li>
+<li><a href="#npm-package">NPM Package</a></li>
 <li><a href="#tests">Tests</a></li>
 <li><a href="#security">Security</a></li>
 <li><a href="#license">License</a></li>
@@ -81,31 +83,27 @@
 <h2>Features</h2>
 <ul>
 <li>
-<p><strong>Validation of Bitcoin Mini private keys</strong><br>
-Ensures the MiniKey follows the proper format.<br>
+<p><strong>Validation of Bitcoin Mini private keys</strong>
+Ensures the MiniKey follows the proper format.
 Example: <code>S6c56bnXQiBjk9mqSYE7ykVQ7NzrRy</code></p>
 </li>
 <li>
-<p><strong>Generation of Bitcoin Mini private keys</strong><br>
-Generates new 30-character MiniKeys that pass all validation checks.<br>
-Example: <code>S9K8CNzE2U3RhYvp5AL8BWXYnVfTmP</code></p>
-</li>
-<li>
-<p><strong>Conversion to HEX private keys</strong><br>
-Converts a valid MiniKey to its 64-character HEX representation.<br>
+<p><strong>Conversion to HEX private keys</strong>
+Converts a valid MiniKey to its 64-character HEX representation.
 Example: <code>0C28FCA386C7A227600B2FE50B7CAE11EC86D3BF1FBE471BE89827E19D72AA1D</code></p>
 </li>
 <li>
-<p><strong>Conversion to Wallet Import Format (WIF)</strong><br>
-Generates WIF keys for mainnet and testnet, supporting compressed and uncompressed keys.<br>
+<p><strong>Conversion to Wallet Import Format (WIF)</strong>
+Generates WIF keys for mainnet and testnet, supporting compressed and uncompressed keys.
 Example: <code>5HueCGU8rMjxEXxiPuD5BDu3qa8N1P2Sr2jXZbNmi4xzFqJMPtj</code></p>
 </li>
 <li>
-<p><strong>Verification of WIF keys</strong><br>
-Verifies whether a WIF key corresponds to its original MiniKey.</p>
+<p><strong>Key Generation</strong>
+Randomly generates valid 30-character MiniKeys.
+Example: <code>S1LgfDWujrsGfSbvGfTHbZn5yCFCv4</code></p>
 </li>
 <li>
-<p><strong>Logging to Console and File</strong><br>
+<p><strong>Logging to Console and File</strong>
 Logs are written to the console and to the <code>app.log</code> file in the project directory. Use the <code>--verbose</code> and <code>--quiet</code> options to adjust log verbosity.</p>
 </li>
 </ul>
@@ -116,89 +114,77 @@ Logs are written to the console and to the <code>app.log</code> file in the proj
 </ul>
 <h2>Installation</h2>
 <p>To install dependencies for local use:</p>
-<pre class="prettyprint source lang-bash"><code>npm install
+<pre class="prettyprint source lang-bash"><code>npm install btc-minikeytools
 </code></pre>
 <p>To install globally as a CLI tool:</p>
-<pre class="prettyprint source lang-bash"><code>npm install -g minikey-converter
+<pre class="prettyprint source lang-bash"><code>npm install -g btc-minikeytools
 </code></pre>
 <p>After installation, use the CLI anywhere:</p>
-<pre class="prettyprint source lang-bash"><code>minikey-converter process S6c56bnXQiBjk9mqSYE7ykVQ7NzrRy
+<pre class="prettyprint source lang-bash"><code>btc-minikeytools process S6c56bnXQiBjk9mqSYE7ykVQ7NzrRy
 </code></pre>
 <h2>Usage</h2>
 <h3>CLI Commands</h3>
 <ol>
-<li><strong>Generate a MiniKey</strong></li>
-</ol>
-<pre class="prettyprint source lang-bash"><code>minikey-converter generate
+<li>
+<p><strong>Generate a MiniKey</strong></p>
+<pre class="prettyprint source lang-bash"><code>btc-minikeytools generate
 </code></pre>
-<p>This will generate a new MiniKey, convert it to HEX, and generate WIF keys for both mainnet and testnet.</p>
-<ol start="2">
-<li><strong>Validate a MiniKey</strong></li>
-</ol>
-<pre class="prettyprint source lang-bash"><code>minikey-converter validate S6c56bnXQiBjk9mqSYE7ykVQ7NzrRy
+</li>
+<li>
+<p><strong>Validate a MiniKey</strong></p>
+<pre class="prettyprint source lang-bash"><code>btc-minikeytools validate S6c56bnXQiBjk9mqSYE7ykVQ7NzrRy
 </code></pre>
-<ol start="3">
-<li><strong>Convert a MiniKey to HEX</strong></li>
-</ol>
-<pre class="prettyprint source lang-bash"><code>minikey-converter to-hex S6c56bnXQiBjk9mqSYE7ykVQ7NzrRy
+</li>
+<li>
+<p><strong>Convert a MiniKey to HEX</strong></p>
+<pre class="prettyprint source lang-bash"><code>btc-minikeytools to-hex S6c56bnXQiBjk9mqSYE7ykVQ7NzrRy
 </code></pre>
-<ol start="4">
-<li><strong>Convert HEX to WIF</strong></li>
-</ol>
-<p>Generate mainnet WIF:</p>
-<pre class="prettyprint source lang-bash"><code>minikey-converter to-wif 4C7A9640C72DC2099F23715D0C8A0D8A35F8906E3CAB61DD3F78B67BF887C9AB
+</li>
+<li>
+<p><strong>Convert HEX to WIF</strong>
+Generate mainnet WIF:</p>
+<pre class="prettyprint source lang-bash"><code>btc-minikeytools to-wif 4C7A9640C72DC2099F23715D0C8A0D8A35F8906E3CAB61DD3F78B67BF887C9AB
 </code></pre>
 <p>Generate testnet WIF:</p>
-<pre class="prettyprint source lang-bash"><code>minikey-converter to-wif 4C7A9640C72DC2099F23715D0C8A0D8A35F8906E3CAB61DD3F78B67BF887C9AB --testnet
+<pre class="prettyprint source lang-bash"><code>btc-minikeytools to-wif 4C7A9640C72DC2099F23715D0C8A0D8A35F8906E3CAB61DD3F78B67BF887C9AB --testnet
 </code></pre>
 <p>Generate compressed WIF:</p>
-<pre class="prettyprint source lang-bash"><code>minikey-converter to-wif 4C7A9640C72DC2099F23715D0C8A0D8A35F8906E3CAB61DD3F78B67BF887C9AB --compressed
+<pre class="prettyprint source lang-bash"><code>btc-minikeytools to-wif 4C7A9640C72DC2099F23715D0C8A0D8A35F8906E3CAB61DD3F78B67BF887C9AB --compressed
 </code></pre>
-<ol start="5">
-<li><strong>Verify a WIF key against a MiniKey</strong></li>
+</li>
+<li>
+<p><strong>Full Workflow: Validate, Convert to HEX, and WIF</strong></p>
+<pre class="prettyprint source lang-bash"><code>btc-minikeytools process S6c56bnXQiBjk9mqSYE7ykVQ7NzrRy
+</code></pre>
+</li>
 </ol>
-<pre class="prettyprint source lang-bash"><code>minikey-converter verify S6c56bnXQiBjk9mqSYE7ykVQ7NzrRy 5HueCGU8rMjxEXxiPuD5BDu3qa8N1P2Sr2jXZbNmi4xzFqJMPtj
-</code></pre>
-<ol start="6">
-<li><strong>Full Workflow: Validate, Convert to HEX, and WIF</strong></li>
-</ol>
-<pre class="prettyprint source lang-bash"><code>minikey-converter process S6c56bnXQiBjk9mqSYE7ykVQ7NzrRy
-</code></pre>
 <h4>Log Level Options</h4>
-<p>The following global options control the logging output for all CLI commands:</p>
 <ul>
 <li><strong>Default</strong>: Logs general information (<code>info</code> level).</li>
 <li><strong>Verbose Mode</strong>: Add <code>--verbose</code> to display detailed logs (<code>debug</code> level).</li>
 <li><strong>Quiet Mode</strong>: Add <code>--quiet</code> to suppress all logs except errors (<code>error</code> level).</li>
 </ul>
 <p>Example:</p>
-<pre class="prettyprint source lang-bash"><code>minikey-converter process S6c56bnXQiBjk9mqSYE7ykVQ7NzrRy --verbose
+<pre class="prettyprint source lang-bash"><code>btc-minikeytools process S6c56bnXQiBjk9mqSYE7ykVQ7NzrRy --verbose
 </code></pre>
 <h3>Basic Example</h3>
-<pre class="prettyprint source lang-javascript"><code>const MiniKeyConverter = require('./src/Classes/MiniKeyConverter');
-const Converter = new MiniKeyConverter();
+<pre class="prettyprint source lang-javascript"><code>const MiniKeyConverter = require('btc-minikeytools');
+const converter = new MiniKeyConverter();
 
-// Generate a MiniKey
-const miniKey = Converter.generateMiniKey();
-console.log(`Generated MiniKey: ${miniKey}`);
+// Validate Bitcoin MiniKey
+const miniKey = 'S6c56bnXQiBjk9mqSYE7ykVQ7NzrRy';
+console.log(`Is valid: \${converter.check(miniKey)}`);
 
-// Validate Bitcoin Mini private key
-console.log(`Is valid: ${Converter.check(miniKey)}`); // Expected Output: Is valid: true
-
-// Convert Bitcoin MiniKey to HEX
-const hexKey = Converter.miniToHex(miniKey);
-console.log(`HEX Private Key: ${hexKey}`); // Expected Output: HEX Private Key: 0C28FCA386C7A227600B2FE50B7CAE11EC86D3BF1FBE471BE89827E19D72AA1D
-
-// Convert HEX to WIF
-const wifKey = Converter.hexToWif(hexKey, false, true);
-console.log(`WIF Key: ${wifKey}`); // Expected Output: WIF Key: KwDiBf89QgGbjEhKnhXJuH7SUWJ9aWdh9vVVGF7NDNN1D8TPCAiG
-
-// Verify if the WIF matches the MiniKey
-const isValid = Converter.verifyWifAgainstMiniKey(miniKey, wifKey);
-console.log(`WIF matches MiniKey: ${isValid}`); // Expected Output: WIF matches MiniKey: true
+// Generate a new MiniKey
+const generatedMiniKey = converter.generateMiniKey();
+console.log(`Generated MiniKey: \${generatedMiniKey}`);
 </code></pre>
 <h2>Documentation</h2>
 <p>The complete documentation is available <a href="https://boomwizardry.github.io/BTC-MiniKeyTools/">here</a>.</p>
+<h2>Project Link</h2>
+<p>Find the full project on GitHub: <a href="https://github.com/BoomWizardry/BTC-MiniKeyTools">BTC-MiniKeyTools</a>.</p>
+<h2>NPM Package</h2>
+<p>Install or view the package on NPM: <a href="https://www.npmjs.com/package/btc-minikeytools">btc-minikeytools</a>.</p>
 <h2>Tests</h2>
 <p>Run the test suite to ensure everything works correctly:</p>
 <pre class="prettyprint source lang-bash"><code>npm test
@@ -225,7 +211,7 @@ console.log(`WIF matches MiniKey: ${isValid}`); // Expected Output: WIF matches 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 4.0.4</a> on Sun Dec 01 2024 19:45:31 GMT+0100 (heure normale d’Europe centrale) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 4.0.4</a> on Sun Dec 01 2024 21:22:34 GMT+0100 (heure normale d’Europe centrale) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
 </footer>
 
 <script>prettyPrint();</script>
